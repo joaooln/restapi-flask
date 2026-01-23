@@ -22,4 +22,4 @@ api.add_resource(User, '/user')
 api.add_resource(Users, '/users', '/users/<string:cpf>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
