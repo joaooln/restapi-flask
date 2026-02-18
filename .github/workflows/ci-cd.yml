@@ -48,7 +48,7 @@ jobs:
         deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
       run: |
         if [ -z "$deploy_url" ]; then
-          echo "RENDER_DEPLOY_HOOK_URL secret not set. Skipping deployment."
+          echo "RENDER_DEPLOY_HOOK_URL secret not set. Skipping deployment now."
           exit 1
         fi
         curl "$deploy_url"
