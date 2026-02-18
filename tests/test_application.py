@@ -51,7 +51,7 @@ class TestApplication():
         assert response.json[0]["email"] == "contato@mateusmuller.me"
 
         birth_date = response.json[0]["birth_date"]["$date"]
-        assert birth_date == "1996-09-10T00:00:00Z"
+        assert birth_date == 842313600000
 
         response = client.get('/user/%s' % invalid_user["cpf"])
         assert response.status_code == 400
