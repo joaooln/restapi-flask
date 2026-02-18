@@ -4,10 +4,11 @@ import os
 class DevConfig:
 
     MONGODB_SETTINGS = {
-        'db': os.getenv('MONGODB_DB'),
-        'host': os.getenv('MONGODB_HOST'),
-        'username': os.getenv('MONGODB_USERNAME'),
-        'password': os.getenv('MONGODB_PASSWORD')
+        'db': os.getenv('MONGODB_DB', 'mydb'),
+        'host': os.getenv('MONGODB_HOST', 'localhost'),
+        'username': os.getenv('MONGODB_USERNAME', 'root'),
+        'password': os.getenv('MONGODB_PASSWORD', 'root'),
+        'authentication_source': 'admin'
     }
 
 
@@ -19,7 +20,7 @@ class ProdConfig:
     MONGODB_DB = os.getenv('MONGODB_DB')
 
     MONGODB_SETTINGS = {
-        'host': 'mongodb+srv://%s:%s@%s/%s?retryWrites=true&w=majority' % (
+        'host': 'mongodb+srv://%s:%s@%s/%s?appName=FlaskAPI' % (
           MONGODB_USER,
           MONGODB_PASSWORD,
           MONGODB_HOST,

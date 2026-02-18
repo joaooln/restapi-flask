@@ -4,14 +4,18 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./:/app
+      - ./application:/app/application
     ports:
       - "5001:5001"
     environment:
+      FLASK_ENV: development
       MONGO_URI: "mongodb://root:root@mongo:27017/mydb?authSource=admin"
       FLASK_APP: "app.py"
       FLASK_DEBUG: "1"
       MONGODB_HOST: "mongo"
+      MONGODB_DB: "mydb"
+      MONGODB_USERNAME: "root"
+      MONGODB_PASSWORD: "root"
     depends_on:
       - mongo
 
@@ -28,7 +32,7 @@ services:
     volumes:
       - mongo-data:/data/db
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
       interval: 10s
       timeout: 5s
       retries: 5
