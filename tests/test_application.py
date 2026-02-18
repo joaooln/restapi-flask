@@ -62,3 +62,8 @@ class TestApplication():
         response = client.patch('/user', json=valid_user)
         assert response.status_code == 200
         assert b"updated" in response.data
+
+    def test_delete_user(self, client, valid_user):
+        response = client.delete('/user/%s' % valid_user["cpf"])
+        assert response.status_code == 200
+        assert b"deleted" in response.data
