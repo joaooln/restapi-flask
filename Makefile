@@ -11,5 +11,6 @@ logs:
 	docker-compose logs -f
 
 test:
+	black .
 	flake8 . --exclude ./venv
 	pytest -v --disable-warnings

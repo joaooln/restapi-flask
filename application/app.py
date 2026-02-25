@@ -5,31 +5,22 @@ from .model import UserModel, HealthCheckModel
 import re
 
 _user_parser = reqparse.RequestParser()
-_user_parser.add_argument('first_name',
-                          type=str,
-                          required=True,
-                          help="This field cannot be blank."
-                          )
-_user_parser.add_argument('last_name',
-                          type=str,
-                          required=True,
-                          help="This field cannot be blank."
-                          )
-_user_parser.add_argument('cpf',
-                          type=str,
-                          required=True,
-                          help="This field cannot be blank."
-                          )
-_user_parser.add_argument('email',
-                          type=str,
-                          required=True,
-                          help="This field cannot be blank."
-                          )
-_user_parser.add_argument('birth_date',
-                          type=str,
-                          required=True,
-                          help="This field cannot be blank."
-                          )
+_user_parser.add_argument(
+    "first_name", type=str, required=True, help="This field cannot be blank."
+)
+_user_parser.add_argument(
+    "last_name", type=str, required=True, help="This field cannot be blank."
+)
+_user_parser.add_argument(
+    "cpf", type=str, required=True, help="This field cannot be blank."
+)
+_user_parser.add_argument(
+    "email", type=str, required=True, help="This field cannot be blank."
+)
+_user_parser.add_argument(
+    "birth_date", type=str, required=True, help="This field cannot be blank."
+)
+
 
 class HealthCheck(Resource):
     def get(self):
@@ -39,6 +30,7 @@ class HealthCheck(Resource):
         else:
             HealthCheckModel(status="OK").save()
             return {"message": "OK"}, 200
+
 
 class Users(Resource):
     def get(self):
@@ -50,7 +42,7 @@ class User(Resource):
     def validate_cpf(self, cpf):
 
         # Has the correct mask?
-        if not re.match(r'\d{3}\.\d{3}\.\d{3}-\d{2}', cpf):
+        if not re.match(r"\d{3}\.\d{3}\.\d{3}-\d{2}", cpf):
             return False
 
         # Grab only numbers
@@ -61,15 +53,13 @@ class User(Resource):
             return False
 
         # Validate first digit after -
-        sum_of_products = sum(a*b for a, b in zip(numbers[0:9],
-                                                  range(10, 1, -1)))
+        sum_of_products = sum(a * b for a, b in zip(numbers[0:9], range(10, 1, -1)))
         expected_digit = (sum_of_products * 10 % 11) % 10
         if numbers[9] != expected_digit:
             return False
 
         # Validate second digit after -
-        sum_of_products = sum(a*b for a, b in zip(numbers[0:10],
-                                                  range(11, 1, -1)))
+        sum_of_products = sum(a * b for a, b in zip(numbers[0:10], range(11, 1, -1)))
         expected_digit = (sum_of_products * 10 % 11) % 10
         if numbers[10] != expected_digit:
             return False
