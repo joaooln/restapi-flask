@@ -13,4 +13,5 @@ logs:
 test:
 	black .
 	flake8 . --exclude ./venv
+	bandit -r . -x '/venv/','/tests/'
 	pytest -v --disable-warnings

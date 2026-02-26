@@ -12,6 +12,7 @@ services:
       MONGO_URI: "mongodb://root:root@mongo:27017/mydb?authSource=admin"
       FLASK_APP: "app.py"
       FLASK_DEBUG: "1"
+      HOST: "0.0.0.0"
       MONGODB_HOST: "mongo"
       MONGODB_DB: "mydb"
       MONGODB_USERNAME: "root"
