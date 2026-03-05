@@ -27,3 +27,12 @@ kind-down:
 
 kind-logs:
 	kubectl logs -f -l app=restapi-flask
+
+deploy-dev:
+	docker build -t $(APP):latest .
+	kind load docker-image $(APP):latest
+	kubectl apply -f kubernetes/manifests
+	kubectl rollout restart deployment $(APP)
+	kubectl rollout status deployment $(APP)
+
+dev: kind-up deploy-dev

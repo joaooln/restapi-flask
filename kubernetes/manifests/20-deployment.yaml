@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: restapi-flask
+  name: restapi-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: restapi-flask
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: restapi-flask
+        restartedAt: "2026_03_04T18_03"
+    spec:
+      containers:
+      - image: restapi-flask:v6
+        name: restapi-flask
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: FLASK_ENV
+            value: development
+          - name: PORT
+            value: "5000"
+        envFrom:
+          - secretRef:
+              name: mongodb-credentials
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources: {}
+status: {}
